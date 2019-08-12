@@ -5,10 +5,32 @@ The purpose of this project is to familiarize the programmer with the python lan
 and virtual machines by creating a tokenizer and parser function alongside a stack
 machine class.
 
+## Tokenizing & Parsing
+Here we begin by creating a file called "tokenize_parse.py". This file will hold a tokenizer function
+and a parsing function. The tokenizer takes in a string input and follows all the same rules
+we used that will be discussed in the next portion. This means the only valid strings are:
+> push, pop, add, sub, mul, div, mod, skip, save, get
+
+Otherwise the only other valid input must be a number. Anything else should raise a ValueError
+with the following message:
+
+                Unexpected Token: <token>
+The function should then return a list of the tokenized contents only if they are deemed valid.
+The parse function will then take the returned list and validate it by returning a boolean (True/False).
+The tokens are deemed valid by their format. This means certain tokens must be accompanied
+with another token which should be defined as a number. These include:
+> push, save, get
+
+Otherwise the remaining tokens must not be accompanied by any other token, even a number,
+on the same line. These tokens include:
+> pop, add, sub, mul, div, mod, skip
+
+If a parsing error occurs, rather than returning a false, it is recommended to raise a
+ValueError with the appropriate message
+
 ## Stack Machine
 We begin the second file by calling it "stack_macine.py". This file will hold a class called
-'StackMachine'. This class is allowed to hold any interal structures that you believe is required
-to use but should include a CurrentLine property and the required functions. 
+'StackMachine'. This class is allowed to hold any internal structures created and should include a CurrentLine property and the required functions. 
 This class will hold the following functions: push, pop, add, sub, mul, div, mod, skip, save, get
 and execute.
 
@@ -35,4 +57,22 @@ When the execute function is finished, the CurrentLine property should be increm
 by one. Ensure the program raises an IndexError when a value cannot be popped out of
 the stack when it is deemed empty, as well as when the get function attempts to
 get an item out of the specified index but it is empty. 
+
+## Driver
+Part 3, the driver program, should be called "driver.py". 
+
+Ensure it imports everything necessary out of part 1 and part 2. The program should read a command line argument
+and denote it as a file. It should then be tokenized and then parsed. It is recommended
+to then place the tokens into an indexable structure to easily navigate and obtain
+the required keywords when needed. The StackMachine class should then be instantiated and
+execute the contents line by line. When there are no more lines, it should stop executing.
+Ensure that if an IndexError is raised via the StackMachine class, the following message is displayed:
+
+                Line #: '<tokens>' caused Invalid Memory Access
+                
+Also ensure that if anything other than 'None' is returned it is printed out (i.e. the pop function).
+Thirdly, ensure that if in any instance that the CurrentLine property is negative (meaning a negative index when read)
+it is handled by the following message and the program exits out:
+
+                Trying to execute invalid line: #
 
